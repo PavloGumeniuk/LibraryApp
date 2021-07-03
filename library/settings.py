@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,10 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'q!o9ybrsa@o8a)fj2&d7qrbtnbvkej5mud(!k)*9vspug62$xh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 AUTH_USER_MODEL = 'authentication.CustomUser'
@@ -80,13 +81,23 @@ WSGI_APPLICATION = 'library.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd4telobf7akjmc',
+        'USER': 'gcbgbveciuyvmh',
+        'PASSWORD': '523908e9f9fc2ce991ff2fb26f5b6b0790093d98dd88994b5eb4ca4f9830150d',
+        'HOST': 'ec2-34-194-215-27.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -124,7 +135,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+DATABASES['default'] = dj_database_url.config(default="postgres://gcbgbveciuyvmh:523908e9f9fc2ce991ff2fb26f5b6b0790093d98dd88994b5eb4ca4f9830150d@ec2-34-194-215-27.compute-1.amazonaws.com:5432/d4telobf7akjmc", conn_max_age=600, ssl_require=True)
 
 
 try:
